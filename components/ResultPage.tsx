@@ -26,13 +26,13 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
       <div className="max-w-5xl mx-auto mb-6 flex justify-between items-center no-print">
         <button 
           onClick={onReset} 
-          className="bg-white/[0.99] border-2 border-teal-600 text-teal-700 px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-teal-50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
+          className="bg-white/[0.99] border-2 border-indigo-600 text-indigo-700 px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-indigo-50 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-sm"
         >
           <RefreshCcw size={20} /> Start New Scout
         </button>
         <button 
           onClick={handlePrint}
-          className="bg-gray-800 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 hover:bg-black transition shadow-md font-medium"
+          className="bg-slate-800 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 hover:bg-black transition shadow-md font-medium"
         >
           <Printer size={18} /> Print / Save PDF
         </button>
@@ -40,15 +40,15 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
 
       <div 
         id="report-content" 
-        className="max-w-5xl mx-auto bg-white/[0.99] rounded-3xl shadow-xl overflow-hidden print:overflow-visible print:shadow-none animate-fade-in print:animate-none backdrop-blur-sm"
+        className="max-w-5xl mx-auto bg-white/[0.99] rounded-3xl shadow-2xl overflow-hidden print:overflow-visible print:shadow-none animate-fade-in print:animate-none backdrop-blur-sm border border-white/40"
       >
         
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-teal-600 to-emerald-600 p-8 text-white text-center print:bg-teal-700 print:text-black border-b-0 print:border-b">
-          <div className="uppercase tracking-wider text-sm font-semibold opacity-80 mb-2 print:text-gray-200">KidScout Report</div>
-          <h1 className="text-4xl font-bold mb-2 print:text-white">{result.childArchetype}</h1>
-          <div className="inline-block bg-white/20 backdrop-blur-md rounded-full px-4 py-1 text-sm font-bold border border-white/30 print:border-white/50 print:text-white">
-             Potential MBTI Type: {result.mbti}
+        <div className="bg-gradient-to-r from-indigo-900 via-indigo-800 to-violet-900 p-10 text-white text-center print:bg-white print:text-black border-b-0 print:border-b">
+          <div className="uppercase tracking-widest text-xs font-bold opacity-70 mb-3 print:text-gray-500">KidScout Official Report</div>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 print:text-black tracking-tight">{result.childArchetype}</h1>
+          <div className="inline-block bg-white/10 backdrop-blur-md rounded-full px-6 py-1.5 text-sm font-bold border border-white/20 print:border-black print:text-black text-indigo-100">
+             Potential MBTI Type: <span className="text-white print:text-black">{result.mbti}</span>
           </div>
         </div>
 
@@ -57,71 +57,78 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
           {/* Summary & Chart */}
           <div className="grid md:grid-cols-2 gap-8 items-center print-break-inside-avoid">
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4 border-l-4 border-orange-500 pl-3">Scout Summary</h3>
-              <p className="text-gray-600 leading-relaxed text-lg text-justify">
+              <h3 className="text-xl font-bold text-slate-800 mb-4 border-l-4 border-fuchsia-500 pl-4">Scout Summary</h3>
+              <p className="text-slate-600 leading-relaxed text-lg text-justify font-medium">
                 {result.summary}
               </p>
             </div>
-            <div className="h-[300px] w-full bg-teal-50/50 rounded-xl p-4 border border-teal-100 print:border-0 print:bg-transparent">
+            <div className="h-[320px] w-full bg-gradient-to-br from-indigo-50/50 to-violet-50/50 rounded-2xl p-4 border border-indigo-50 print:border-0 print:bg-transparent relative">
               <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={result.scores}>
-                  <PolarGrid stroke="#94a3b8" />
-                  <PolarAngleAxis dataKey="attribute" tick={{ fill: '#334155', fontSize: 12, fontWeight: 600 }} />
-                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
+                <RadarChart cx="50%" cy="50%" outerRadius="75%" data={result.scores}>
+                  <PolarGrid stroke="#cbd5e1" strokeDasharray="3 3" />
+                  <PolarAngleAxis dataKey="attribute" tick={{ fill: '#475569', fontSize: 12, fontWeight: 700 }} />
+                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                   <Radar
                     name="Talent"
                     dataKey="value"
-                    stroke="#0d9488"
-                    fill="#14b8a6"
-                    fillOpacity={0.5}
+                    stroke="#6366f1"
+                    strokeWidth={3}
+                    fill="#8b5cf6"
+                    fillOpacity={0.4}
                   />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          {/* Handwriting Analysis - New Section */}
-          <div className="bg-orange-50/50 rounded-xl p-6 border border-orange-100 print:border-0 print:bg-transparent print-break-inside-avoid">
-            <h3 className="text-xl font-bold text-gray-800 mb-3 flex items-center gap-2">
-              <span className="text-orange-500"><PenTool size={24} /></span>
+          {/* Handwriting Analysis */}
+          <div className="bg-orange-50/50 rounded-2xl p-8 border border-orange-100 print:border-0 print:bg-transparent print-break-inside-avoid">
+            <h3 className="text-xl font-bold text-slate-800 mb-3 flex items-center gap-3">
+              <div className="p-2 bg-orange-100 text-orange-600 rounded-lg">
+                <PenTool size={20} />
+              </div>
               Handwriting Insights
             </h3>
-            <p className="text-gray-700 leading-relaxed text-lg">
+            <p className="text-slate-700 leading-relaxed text-lg">
               {result.handwritingAnalysis}
             </p>
           </div>
 
-          <div className="h-px bg-gray-200 w-full my-6 print:hidden"></div>
+          <div className="h-px bg-slate-100 w-full my-6 print:hidden"></div>
 
           {/* Details Grid - Now 2x2 */}
           <div className="grid md:grid-cols-2 gap-6">
             
             {/* Careers */}
-            <div className="bg-blue-50 rounded-xl p-6 print:bg-white print:border print:border-blue-200 print-break-inside-avoid">
-              <div className="flex items-center gap-2 mb-4 text-blue-700">
-                <Briefcase size={24} />
+            <div className="bg-sky-50 rounded-2xl p-8 print:bg-white print:border print:border-sky-100 print-break-inside-avoid shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-3 mb-5 text-sky-700">
+                <div className="p-2 bg-sky-100 rounded-lg">
+                  <Briefcase size={22} />
+                </div>
                 <h3 className="font-bold text-lg">Potential Careers</h3>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {result.suggestedCareers.map((c, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0 print:bg-blue-600"></span>
+                  <li key={i} className="flex items-start gap-3 text-slate-700 font-medium">
+                    <span className="mt-2 w-1.5 h-1.5 bg-sky-400 rounded-full flex-shrink-0 print:bg-sky-600"></span>
                     <span>{c}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Growth Track (was Education Path) */}
-            <div className="bg-purple-50 rounded-xl p-6 print:bg-white print:border print:border-purple-200 print-break-inside-avoid">
-               <div className="flex items-center gap-2 mb-4 text-purple-700">
-                <Compass size={24} />
+            {/* Growth Track */}
+            <div className="bg-violet-50 rounded-2xl p-8 print:bg-white print:border print:border-violet-100 print-break-inside-avoid shadow-sm hover:shadow-md transition-shadow">
+               <div className="flex items-center gap-3 mb-5 text-violet-700">
+                <div className="p-2 bg-violet-100 rounded-lg">
+                  <Compass size={22} />
+                </div>
                 <h3 className="font-bold text-lg">Growth Track</h3>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {result.educationPath.map((e, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0 print:bg-purple-600"></span>
+                  <li key={i} className="flex items-start gap-3 text-slate-700 font-medium">
+                    <span className="mt-2 w-1.5 h-1.5 bg-violet-400 rounded-full flex-shrink-0 print:bg-violet-600"></span>
                     <span>{e}</span>
                   </li>
                 ))}
@@ -129,15 +136,17 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
             </div>
 
             {/* Parenting Tips */}
-            <div className="bg-green-50 rounded-xl p-6 print:bg-white print:border print:border-green-200 print-break-inside-avoid">
-              <div className="flex items-center gap-2 mb-4 text-green-700">
-                <Heart size={24} />
+            <div className="bg-emerald-50 rounded-2xl p-8 print:bg-white print:border print:border-emerald-100 print-break-inside-avoid shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-3 mb-5 text-emerald-700">
+                 <div className="p-2 bg-emerald-100 rounded-lg">
+                  <Heart size={22} />
+                </div>
                 <h3 className="font-bold text-lg">Parenting Tips</h3>
               </div>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {result.parentingTips.map((p, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0 print:bg-green-600"></span>
+                  <li key={i} className="flex items-start gap-3 text-slate-700 font-medium">
+                    <span className="mt-2 w-1.5 h-1.5 bg-emerald-400 rounded-full flex-shrink-0 print:bg-emerald-600"></span>
                     <span>{p}</span>
                   </li>
                 ))}
@@ -145,16 +154,18 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
             </div>
 
             {/* Parenting Challenges */}
-            <div className="bg-orange-50 rounded-xl p-6 print:bg-white print:border print:border-orange-200 print-break-inside-avoid">
-              <div className="flex items-center gap-2 mb-4 text-orange-700">
-                <AlertTriangle size={24} />
+            <div className="bg-rose-50 rounded-2xl p-8 print:bg-white print:border print:border-rose-100 print-break-inside-avoid shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-3 mb-5 text-rose-700">
+                <div className="p-2 bg-rose-100 rounded-lg">
+                   <AlertTriangle size={22} />
+                </div>
                 <h3 className="font-bold text-lg">Potential Challenges</h3>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {result.parentingChallenges?.map((item, i) => (
                   <div key={i} className="text-sm">
-                    <p className="font-bold text-orange-900 mb-1">{item.challenge}</p>
-                    <p className="text-gray-700 italic">Try: {item.solution}</p>
+                    <p className="font-bold text-rose-900 mb-1 text-base">{item.challenge}</p>
+                    <p className="text-slate-700">Try: <span className="italic">{item.solution}</span></p>
                   </div>
                 ))}
               </div>
@@ -164,7 +175,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ onReset }) => {
         </div>
 
         {/* Disclaimer footer */}
-        <div className="bg-gray-100 p-4 text-center text-xs text-gray-500 print:bg-white print:mt-8 print:border-t">
+        <div className="bg-slate-50 p-6 text-center text-xs text-slate-400 print:bg-white print:mt-8 print:border-t">
           <p>Generated by KidScout AI. This is a suggestive tool and not a professional psychological diagnosis.</p>
         </div>
       </div>

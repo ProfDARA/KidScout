@@ -73,7 +73,7 @@ const AssessmentPage: React.FC<AssessmentPageProps> = ({ onComplete }) => {
     <div className="w-full px-4 sm:px-6">
       <div className="max-w-3xl mx-auto">
         {error && (
-          <div className="mb-6 bg-red-50/[0.99] border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
+          <div className="mb-6 bg-red-50/[0.99] border border-red-200 text-red-700 px-4 py-3 rounded-2xl flex items-center gap-2 shadow-sm">
             <AlertCircle size={20} />
             <p>{error}</p>
           </div>
@@ -81,25 +81,25 @@ const AssessmentPage: React.FC<AssessmentPageProps> = ({ onComplete }) => {
 
         <div className="space-y-8">
           {/* Questions Section */}
-          <div className="bg-white/[0.99] rounded-2xl shadow-sm p-6 sm:p-8 border-t-4 border-teal-500 backdrop-blur-sm">
-            <h3 className="text-xl font-bold text-teal-700 mb-6 flex items-center gap-2">
-              <span className="bg-teal-100 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+          <div className="bg-white/[0.99] rounded-3xl shadow-xl p-6 sm:p-8 border-t-8 border-indigo-500 backdrop-blur-sm">
+            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+              <span className="bg-indigo-100 text-indigo-700 w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-inner">1</span>
               Personality Snapshot
             </h3>
             
             <div className="space-y-8">
               {QUESTIONS.map((q) => (
                 <div key={q.id} className="border-b border-gray-100 last:border-0 pb-6 last:pb-0">
-                  <p className="font-semibold text-gray-800 mb-3">{q.text}</p>
+                  <p className="font-semibold text-slate-700 mb-4 text-lg">{q.text}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {q.options.map((option) => (
                       <button
                         key={option}
                         onClick={() => handleOptionSelect(q.id, option)}
-                        className={`text-left px-4 py-3 rounded-lg border transition-all text-sm
+                        className={`text-left px-5 py-4 rounded-xl border transition-all text-sm font-medium
                           ${formState.answers[q.id] === option 
-                            ? 'border-teal-500 bg-teal-50 text-teal-800 ring-1 ring-teal-500 shadow-sm' 
-                            : 'border-gray-200 hover:border-teal-300 hover:bg-gray-50 text-gray-600'
+                            ? 'border-indigo-500 bg-indigo-50 text-indigo-900 ring-2 ring-indigo-200 shadow-md transform -translate-y-0.5' 
+                            : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50 text-slate-600'
                           }`}
                       >
                         {option}
@@ -112,24 +112,27 @@ const AssessmentPage: React.FC<AssessmentPageProps> = ({ onComplete }) => {
           </div>
 
           {/* Handwriting Upload Section */}
-          <div className="bg-white/[0.99] rounded-2xl shadow-sm p-6 sm:p-8 border-t-4 border-orange-500 backdrop-blur-sm">
-             <h3 className="text-xl font-bold text-orange-700 mb-6 flex items-center gap-2">
-              <span className="bg-orange-100 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+          <div className="bg-white/[0.99] rounded-3xl shadow-xl p-6 sm:p-8 border-t-8 border-fuchsia-500 backdrop-blur-sm">
+             <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+              <span className="bg-fuchsia-100 text-fuchsia-700 w-10 h-10 rounded-full flex items-center justify-center text-lg font-extrabold shadow-inner">2</span>
               Handwriting Sample
             </h3>
             
-            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-800">
-              <strong>Mission:</strong> Please ask your child to draw a picture or write a simple sentence like <em>"The quick brown fox jumps over the lazy dog"</em>. Take a clear photo and upload it.
+            <div className="bg-indigo-50/50 border border-indigo-100 rounded-xl p-5 mb-6 text-sm text-indigo-800 flex flex-col gap-2">
+              <p className="font-bold uppercase tracking-wide text-xs text-indigo-400">Mission</p>
+              <p>Please ask your child to draw a picture or write a simple sentence like <em>"The quick brown fox jumps over the lazy dog"</em>. Take a clear photo and upload it.</p>
             </div>
 
             {!formState.handwritingImage ? (
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer hover:bg-orange-50 hover:border-orange-400 transition-colors"
+                className="group border-3 border-dashed border-slate-300 rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer hover:bg-fuchsia-50 hover:border-fuchsia-400 transition-all duration-300"
               >
-                <Upload size={40} className="text-gray-400 mb-3" />
-                <p className="text-gray-600 font-medium">Click to upload photo</p>
-                <p className="text-gray-400 text-xs mt-1">JPG or PNG (Max 5MB)</p>
+                <div className="bg-slate-100 group-hover:bg-white p-4 rounded-full mb-4 transition-colors">
+                  <Upload size={32} className="text-slate-400 group-hover:text-fuchsia-500" />
+                </div>
+                <p className="text-slate-600 font-bold text-lg group-hover:text-fuchsia-700">Click to upload photo</p>
+                <p className="text-slate-400 text-sm mt-1">JPG or PNG (Max 5MB)</p>
                 <input 
                   type="file" 
                   ref={fileInputRef}
@@ -139,35 +142,35 @@ const AssessmentPage: React.FC<AssessmentPageProps> = ({ onComplete }) => {
                 />
               </div>
             ) : (
-              <div className="relative rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-inner">
                 <img 
                   src={formState.handwritingImage} 
                   alt="Handwriting Sample" 
-                  className="w-full h-64 object-contain"
+                  className="w-full h-64 object-contain p-4"
                 />
                 <button 
                   onClick={removeImage}
-                  className="absolute top-2 right-2 bg-white/80 hover:bg-white text-red-500 p-2 rounded-full shadow-sm transition"
+                  className="absolute top-3 right-3 bg-white hover:bg-red-50 text-slate-400 hover:text-red-500 p-2 rounded-full shadow-md transition-all"
                 >
                   <X size={20} />
                 </button>
-                <div className="absolute bottom-2 right-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded-md flex items-center gap-1">
-                  <CheckCircle size={12} /> Uploaded
+                <div className="absolute bottom-3 right-3 bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                  <CheckCircle size={14} /> Uploaded
                 </div>
               </div>
             )}
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center pt-6 pb-8">
             <button
               disabled={!canProceed()}
               onClick={handleSubmit}
               className={`
-                px-8 py-4 rounded-full text-lg font-bold flex items-center gap-2 shadow-lg transition-all transform
+                px-10 py-5 rounded-full text-xl font-bold flex items-center gap-3 shadow-xl transition-all transform
                 ${canProceed() 
-                  ? 'bg-gradient-to-r from-teal-600 to-emerald-600 text-white hover:scale-105 hover:shadow-xl' 
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'}
+                  ? 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:scale-105 hover:shadow-indigo-500/30 hover:shadow-2xl' 
+                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'}
               `}
             >
               Generate Report <ChevronRight size={24} />
